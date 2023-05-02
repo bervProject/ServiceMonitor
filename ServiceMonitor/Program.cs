@@ -1,5 +1,10 @@
+using ServiceMonitor.AWS;
+using ServiceMonitor.Cloud;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IAppRunner, AppRunner>();
+builder.Services.AddScoped<IInstance, AWSInstance>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

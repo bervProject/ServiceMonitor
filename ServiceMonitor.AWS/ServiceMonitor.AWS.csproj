@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.AppRunner" Version="3.7.105.17" />
+    <PackageReference Include="AWSSDK.EC2" Version="3.7.132.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceMonitor.Cloud\ServiceMonitor.Cloud.csproj" />
+  </ItemGroup>
+
+</Project>
