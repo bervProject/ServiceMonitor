@@ -3,16 +3,25 @@
 using Amazon;
 using Amazon.SimpleEmailV2;
 using Amazon.SimpleEmailV2.Model;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ServiceMonitor.AWS;
 using ServiceMonitor.Cloud;
 using System.Text;
 
+IConfiguration config = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", true)
+    .AddEnvironmentVariables()
+    .Build();
+
 var serviceCollection = new ServiceCollection();
+serviceCollection.AddSingleton(config);
 serviceCollection.AddLogging(configure =>
 {
     configure.ClearProviders();
+    configure.AddConfiguration(config.GetSection("Logging"));
     configure.AddConsole();
 });
 serviceCollection.AddAWSService<IAmazonSimpleEmailServiceV2>();
