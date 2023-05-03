@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiceMonitor.Cloud;
 
-namespace ServiceMonitor.Pages
+namespace ServiceMonitor.Web.Pages
 {
     public class IndexModel : PageModel
     {

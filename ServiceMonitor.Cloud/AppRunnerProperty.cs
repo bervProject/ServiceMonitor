@@ -1,8 +1,6 @@
 ﻿namespace ServiceMonitor.Cloud
 {
-    public class AppRunnerProperty
+    public class AppRunnerProperty : BasicProperty
     {
-        public string Name { get; set; }
-        public string Status { get; set; }
     }
 }

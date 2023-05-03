@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ServiceMonitor.Controllers
+namespace ServiceMonitor.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace ServiceMonitor.Cloud
+﻿namespace ServiceMonitor.Cloud
 {
-    public class InstanceProperty
+    public class InstanceProperty : BasicProperty
     {
-        public string Name { get; set; } = null!;
-        public DateTimeOffset CreatedAt { get; set; }
         public string Type { get; set; } = null!;
-        public string Status { get; set; } = null!;
     }
 }

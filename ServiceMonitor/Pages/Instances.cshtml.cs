@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceMonitor.Cloud;
 
-namespace ServiceMonitor.Pages
+namespace ServiceMonitor.Web.Pages
 {
     public class InstancesModel : PageModel
     {

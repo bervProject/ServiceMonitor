@@ -27,6 +27,7 @@ serviceCollection.AddLogging(configure =>
 serviceCollection.AddAWSService<IAmazonSimpleEmailServiceV2>();
 serviceCollection.AddScoped<IAppRunner, AppRunner>();
 serviceCollection.AddScoped<IInstance, AWSInstance>();
+serviceCollection.AddScoped<IFunction, Lambda>();
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -36,18 +37,20 @@ logger.LogDebug("Starting application");
 var stringBuilder = new StringBuilder();
 
 // get app runners
+logger.LogDebug("Populate App Runners");
 var appRunners = serviceProvider.GetRequiredService<IAppRunner>();
 var data = await appRunners.GetAppRunnersAsync("ap-southeast-1");
 stringBuilder.AppendLine("<h2>App Runner</h2>");
 stringBuilder.AppendLine("<table>");
-stringBuilder.AppendLine("<tr><th>Name</th><th>Status</th></tr>");
+stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Status</th></tr>");
 foreach (var appRunner in data)
 {
-    stringBuilder.AppendLine($"<tr><td>{appRunner.Name}</td><td>{appRunner.Status}</td></tr>");
+    stringBuilder.AppendLine($"<tr><td>{appRunner.Name}</td><td>{appRunner.CreatedAt}</td><td>{appRunner.Status}</td></tr>");
 }
 stringBuilder.AppendLine("</table>");
 
 // get instances
+logger.LogDebug("Populate EC2 Instances");
 var instances = serviceProvider.GetRequiredService<IInstance>();
 
 var regions = new List<string>
@@ -59,15 +62,33 @@ foreach (var region in regions)
 {
     stringBuilder.AppendLine($"<br><h2>EC2 Instances (Region: {region})</h2>");
     stringBuilder.AppendLine("<table>");
-    stringBuilder.AppendLine("<tr><th>Name</th><th>Status</th></tr>");
+    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Type</th><th>Status</th></tr>");
     var ec2Instances = await instances.GetInstancesAsync(region);
     foreach (var ec2Instance in ec2Instances)
     {
-        stringBuilder.AppendLine($"<tr><td>{ec2Instance.Name}</td><td>{ec2Instance.Status}</td></tr>");
+        stringBuilder.AppendLine($"<tr><td>{ec2Instance.Name}</td><td>{ec2Instance.CreatedAt}</td><td>{ec2Instance.Type}</td><td>{ec2Instance.Status}</td></tr>");
     }
     stringBuilder.AppendLine("</table>");
 }
 
+// get lambda
+logger.LogDebug("Populate Lambda");
+var lambdaFunction = serviceProvider.GetRequiredService<IFunction>();
+foreach (var region in regions)
+{
+    stringBuilder.AppendLine($"<br><h2>Lambda (Region: {region})</h2>");
+    stringBuilder.AppendLine("<table>");
+    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Version</th><th>Status</th></tr>");
+    var functions = await lambdaFunction.GetFunctionsAsync(region);
+    foreach (var functionData in functions)
+    {
+        stringBuilder.AppendLine($"<tr><td>{functionData.Name}</td><td>{functionData.CreatedAt}</td><td>{functionData.Version}</td><td>{functionData.Status}</td></tr>");
+    }
+    stringBuilder.AppendLine("</table>");
+}
+
+// sending email
+logger.LogDebug("Sending Email");
 var sesRegion = RegionEndpoint.GetBySystemName("ap-southeast-1");
 using var emailClient = new AmazonSimpleEmailServiceV2Client(sesRegion);
 var request = new SendEmailRequest
