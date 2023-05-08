@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.6" />
-    <PackageReference Include="AWSSDK.SimpleEmailV2" Version="3.7.102.36" />
+    <PackageReference Include="AWSSDK.SimpleEmailV2" Version="3.7.102.38" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
