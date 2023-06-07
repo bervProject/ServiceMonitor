@@ -1,10 +1,10 @@
-﻿@page "/ec2"
+﻿@page "/lambda"
 @using ServiceMonitor.Cloud;
-@inject IInstance InstanceService;
+@inject IFunction FunctionsService;
 
-<PageTitle>EC2</PageTitle>
+<PageTitle>Lambda</PageTitle>
 
-<h1>EC2</h1>
+<h1>Lambda</h1>
 
 <select class="form-control" @onchange="FetchRegion">
 	<option value="">Select</option>
@@ -21,20 +21,20 @@
 		</div>
 	</div>
 }
-else if (Instances.Count == 0)
+else if (Functions.Count == 0)
 {
 	<p>No Data</p>
 }
 else
 {
-	<h3>Total Data: @Instances.Count</h3>
+	<h3>Total Data: @Functions.Count</h3>
 	<table class="table">
 		<tr>
 			<th>Name</th>
 			<th>Created At</th>
 			<th>Status</th>
 		</tr>
-		@foreach (var instance in Instances)
+		@foreach (var instance in Functions)
 		{
 			<tr>
 				<td>@instance.Name</td>
@@ -47,7 +47,7 @@ else
 
 @code {
 	private bool _loading = false;
-	public ICollection<InstanceProperty> Instances { get; private set; } = new List<InstanceProperty>();
+	public ICollection<FunctionProperty> Functions { get; private set; } = new List<FunctionProperty>();
 	public string SelectedRegion { get; set; } = "ap-southeast-1";
 
 	async Task FetchRegion(ChangeEventArgs e)
@@ -67,7 +67,7 @@ else
 
 	private async Task FetchData()
 	{
-		Instances = await InstanceService.GetInstancesAsync(region: SelectedRegion);
+		Functions = await FunctionsService.GetFunctionsAsync(region: SelectedRegion);
 		_loading = false;
 	}
 }

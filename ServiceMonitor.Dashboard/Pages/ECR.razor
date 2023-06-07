@@ -1,10 +1,10 @@
-﻿@page "/ec2"
+﻿@page "/ecr"
 @using ServiceMonitor.Cloud;
-@inject IInstance InstanceService;
+@inject IImage ECRService;
 
-<PageTitle>EC2</PageTitle>
+<PageTitle>ECR</PageTitle>
 
-<h1>EC2</h1>
+<h1>ECR</h1>
 
 <select class="form-control" @onchange="FetchRegion">
 	<option value="">Select</option>
@@ -21,20 +21,20 @@
 		</div>
 	</div>
 }
-else if (Instances.Count == 0)
+else if (ECRs.Count == 0)
 {
 	<p>No Data</p>
 }
 else
 {
-	<h3>Total Data: @Instances.Count</h3>
+	<h3>Total Data: @ECRs.Count</h3>
 	<table class="table">
 		<tr>
 			<th>Name</th>
 			<th>Created At</th>
 			<th>Status</th>
 		</tr>
-		@foreach (var instance in Instances)
+		@foreach (var instance in ECRs)
 		{
 			<tr>
 				<td>@instance.Name</td>
@@ -47,7 +47,7 @@ else
 
 @code {
 	private bool _loading = false;
-	public ICollection<InstanceProperty> Instances { get; private set; } = new List<InstanceProperty>();
+	public ICollection<BasicProperty> ECRs { get; private set; } = new List<BasicProperty>();
 	public string SelectedRegion { get; set; } = "ap-southeast-1";
 
 	async Task FetchRegion(ChangeEventArgs e)
@@ -67,7 +67,7 @@ else
 
 	private async Task FetchData()
 	{
-		Instances = await InstanceService.GetInstancesAsync(region: SelectedRegion);
+		ECRs = await ECRService.GetImagesAsync(region: SelectedRegion);
 		_loading = false;
 	}
 }
