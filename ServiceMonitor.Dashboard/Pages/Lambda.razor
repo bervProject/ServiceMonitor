@@ -1,0 +1,73 @@
+﻿@page "/lambda"
+@using ServiceMonitor.Cloud;
+@inject IFunction FunctionsService;
+
+<PageTitle>Lambda</PageTitle>
+
+<h1>Lambda</h1>
+
+<select class="form-control" @onchange="FetchRegion">
+	<option value="">Select</option>
+	<option value="ap-southeast-1">Singapore</option>
+	<option value="ap-southeast-3">Jakarta</option>
+</select>
+
+
+@if (_loading)
+{
+	<div class="d-flex justify-content-center">
+		<div class="spinner-border" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+}
+else if (Functions.Count == 0)
+{
+	<p>No Data</p>
+}
+else
+{
+	<h3>Total Data: @Functions.Count</h3>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Created At</th>
+			<th>Status</th>
+		</tr>
+		@foreach (var instance in Functions)
+		{
+			<tr>
+				<td>@instance.Name</td>
+				<td>@instance.CreatedAt</td>
+				<td>@instance.Status</td>
+			</tr>
+		}
+	</table>
+}
+
+@code {
+	private bool _loading = false;
+	public ICollection<FunctionProperty> Functions { get; private set; } = new List<FunctionProperty>();
+	public string SelectedRegion { get; set; } = "ap-southeast-1";
+
+	async Task FetchRegion(ChangeEventArgs e)
+	{
+		if (e.Value is not null)
+		{
+			var value = (string)e.Value;
+			if (string.IsNullOrEmpty(value))
+			{
+				return;
+			}
+			SelectedRegion = value;
+			_loading = true;
+			await FetchData();
+		}
+	}
+
+	private async Task FetchData()
+	{
+		Functions = await FunctionsService.GetFunctionsAsync(region: SelectedRegion);
+		_loading = false;
+	}
+}
