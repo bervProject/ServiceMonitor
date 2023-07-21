@@ -28,6 +28,7 @@ serviceCollection.AddAWSService<IAmazonSimpleEmailServiceV2>();
 serviceCollection.AddScoped<IAppRunner, AppRunner>();
 serviceCollection.AddScoped<IInstance, AWSInstance>();
 serviceCollection.AddScoped<IFunction, Lambda>();
+serviceCollection.AddScoped<IImage, ECR>();
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -83,6 +84,21 @@ foreach (var region in regions)
     foreach (var functionData in functions)
     {
         stringBuilder.AppendLine($"<tr><td>{functionData.Name}</td><td>{functionData.CreatedAt}</td><td>{functionData.Version}</td><td>{functionData.Status}</td></tr>");
+    }
+    stringBuilder.AppendLine("</table>");
+}
+
+logger.LogDebug("Populate ECR");
+var containerImages = serviceProvider.GetRequiredService<IImage>();
+foreach (var region in regions)
+{
+    stringBuilder.AppendLine($"<br><h2>ECR (Region: {region})</h2>");
+    stringBuilder.AppendLine("<table>");
+    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Status</th></tr>");
+    var images = await containerImages.GetImagesAsync(region);
+    foreach (var imageData in images)
+    {
+        stringBuilder.AppendLine($"<tr><td>{imageData.Name}</td><td>{imageData.CreatedAt}</td><td>{imageData.Status}</td></tr>");
     }
     stringBuilder.AppendLine("</table>");
 }
