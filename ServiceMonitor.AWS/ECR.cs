@@ -1,10 +1,7 @@
-﻿using Amazon.EC2.Model;
-using Amazon.EC2;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ServiceMonitor.Cloud;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon;

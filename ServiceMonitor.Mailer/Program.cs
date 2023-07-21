@@ -29,6 +29,7 @@ serviceCollection.AddScoped<IAppRunner, AppRunner>();
 serviceCollection.AddScoped<IInstance, AWSInstance>();
 serviceCollection.AddScoped<IFunction, Lambda>();
 serviceCollection.AddScoped<IImage, ECR>();
+serviceCollection.AddScoped<IBucket, S3>();
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -103,6 +104,20 @@ foreach (var region in regions)
     stringBuilder.AppendLine("</table>");
 }
 
+logger.LogDebug("Populate S3");
+var buckets = serviceProvider.GetRequiredService<IBucket>();
+foreach (var region in regions)
+{
+    stringBuilder.AppendLine($"<br><h2>S3 (Region: {region})</h2>");
+    stringBuilder.AppendLine("<table>");
+    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Status</th></tr>");
+    var bucketList = await buckets.GetBuckets(region);
+    foreach (var bucket in bucketList)
+    {
+        stringBuilder.AppendLine($"<tr><td>{bucket.Name}</td><td>{bucket.CreatedAt}</td><td>{bucket.Status}</td></tr>");
+    }
+    stringBuilder.AppendLine("</table>");
+}
 // sending email
 logger.LogDebug("Sending Email");
 var sesRegion = RegionEndpoint.GetBySystemName("ap-southeast-1");
