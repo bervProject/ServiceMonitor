@@ -16,12 +16,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceMonitor.Mailer", "Se
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D462DAA-8704-4F4B-B8B6-E1DD012D870C}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		.github\workflows\cron.yml = .github\workflows\cron.yml
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceMonitor.Dashboard", "ServiceMonitor.Dashboard\ServiceMonitor.Dashboard.csproj", "{6B1DF568-BF56-45AA-9B70-D9F678B44A42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceMonitor.Cleaner", "ServiceMonitor.Cleaner\ServiceMonitor.Cleaner.csproj", "{CA2C1BED-B547-40CC-92BC-F9C63D17F6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceMonitor.Cleaner", "ServiceMonitor.Cleaner\ServiceMonitor.Cleaner.csproj", "{CA2C1BED-B547-40CC-92BC-F9C63D17F6EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
