@@ -9,7 +9,7 @@
     <PackageReference Include="AWSSDK.EC2" Version="3.7.332.2" />
     <PackageReference Include="AWSSDK.ECR" Version="3.7.303" />
     <PackageReference Include="AWSSDK.Lambda" Version="3.7.305.43" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.309.11" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.310.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
   </ItemGroup>
