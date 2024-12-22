@@ -39,6 +39,7 @@ namespace ServiceMonitor.AWS
                 Status = x.Status,
                 Name = x.ServiceName,
                 CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt,
             }).ToList();
         }
     }

@@ -44,10 +44,10 @@ var appRunners = serviceProvider.GetRequiredService<IAppRunner>();
 var data = await appRunners.GetAppRunnersAsync("ap-southeast-1");
 stringBuilder.AppendLine("<h2>App Runner</h2>");
 stringBuilder.AppendLine("<table>");
-stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Status</th></tr>");
+stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Updated At</th><th>Status</th></tr>");
 foreach (var appRunner in data)
 {
-    stringBuilder.AppendLine($"<tr><td>{appRunner.Name}</td><td>{appRunner.CreatedAt}</td><td>{appRunner.Status}</td></tr>");
+    stringBuilder.AppendLine($"<tr><td>{appRunner.Name}</td><td>{appRunner.CreatedAt}</td><td>{appRunner.UpdatedAt}</td><td>{appRunner.Status}</td></tr>");
 }
 stringBuilder.AppendLine("</table>");
 
@@ -64,11 +64,11 @@ foreach (var region in regions)
 {
     stringBuilder.AppendLine($"<br><h2>EC2 Instances (Region: {region})</h2>");
     stringBuilder.AppendLine("<table>");
-    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Type</th><th>Status</th></tr>");
+    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Updated At</th><th>Type</th><th>Status</th></tr>");
     var ec2Instances = await instances.GetInstancesAsync(region);
     foreach (var ec2Instance in ec2Instances)
     {
-        stringBuilder.AppendLine($"<tr><td>{ec2Instance.Name}</td><td>{ec2Instance.CreatedAt}</td><td>{ec2Instance.Type}</td><td>{ec2Instance.Status}</td></tr>");
+        stringBuilder.AppendLine($"<tr><td>{ec2Instance.Name}</td><td>{ec2Instance.CreatedAt}</td><td>{ec2Instance.UpdatedAt}</td><td>{ec2Instance.Type}</td><td>{ec2Instance.Status}</td></tr>");
     }
     stringBuilder.AppendLine("</table>");
 }

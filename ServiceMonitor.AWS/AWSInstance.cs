@@ -44,6 +44,7 @@ namespace ServiceMonitor.AWS
                     Type = x.InstanceType.Value,
                     CreatedAt = x.LaunchTime,
                     Status = x.State.Name.Value,
+                    UpdatedAt = x.UsageOperationUpdateTime
                 });
                 collection.AddRange(instances);
             });
