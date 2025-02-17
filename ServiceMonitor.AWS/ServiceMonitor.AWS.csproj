@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.AppRunner" Version="3.7.400.95" />
     <PackageReference Include="AWSSDK.EC2" Version="3.7.429.6" />
-    <PackageReference Include="AWSSDK.ECR" Version="3.7.409" />
+    <PackageReference Include="AWSSDK.ECR" Version="3.7.409.4" />
     <PackageReference Include="AWSSDK.Lambda" Version="3.7.411.34" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.414.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
