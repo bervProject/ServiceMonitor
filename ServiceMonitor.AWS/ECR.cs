@@ -43,7 +43,7 @@ namespace ServiceMonitor.AWS
             var list = response.Repositories.Select(x => new BasicProperty
             {
                 Name = x.RepositoryName,
-                CreatedAt = x.CreatedAt,
+                CreatedAt = x.CreatedAt ?? DateTime.Now,
                 Status = "-",
             }).ToList();
 
@@ -69,7 +69,7 @@ namespace ServiceMonitor.AWS
             var tagsResources = await ecrClient.DescribeImagesAsync(imageListRequest);
             return tagsResources.ImageDetails.Select(x => new TagItem
             {
-                CreatedTime = x.ImagePushedAt,
+                CreatedTime = x.ImagePushedAt ?? DateTime.Now,
                 Tags = x.ImageTags,
                 ImageDigest = x.ImageDigest,
             }).ToList();
