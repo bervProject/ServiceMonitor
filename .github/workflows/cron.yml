@@ -8,7 +8,7 @@ on:
 jobs:
   run-report:
     name: "Run Report"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
@@ -35,7 +35,7 @@ jobs:
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
   run-cleaner:
     name: "Run Cleaner"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
