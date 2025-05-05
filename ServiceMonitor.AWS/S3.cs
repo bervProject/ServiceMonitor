@@ -31,7 +31,7 @@ namespace ServiceMonitor.AWS
             var list = response.Buckets.Select(x => new BasicProperty
             {
                 Name = x.BucketName,
-                CreatedAt = x.CreationDate,
+                CreatedAt = x.CreationDate ?? DateTime.Now,
                 Status = "-",
             }).ToList();
             return list;
