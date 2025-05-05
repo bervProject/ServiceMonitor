@@ -42,7 +42,7 @@ namespace ServiceMonitor.AWS
                 {
                     Name = x.InstanceId,
                     Type = x.InstanceType.Value,
-                    CreatedAt = x.LaunchTime,
+                    CreatedAt = x.LaunchTime ?? DateTime.Now,
                     Status = x.State.Name.Value,
                     UpdatedAt = x.UsageOperationUpdateTime
                 });
