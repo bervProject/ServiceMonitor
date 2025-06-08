@@ -36,9 +36,9 @@ namespace ServiceMonitor.AWS
             var nextToken = string.Empty;
             var response = await ec2Client.DescribeInstancesAsync(cancellationToken);
 
-            response.Reservations.ForEach(x =>
+            response.Reservations?.ForEach(x =>
             {
-                var instances = x.Instances.Select(x => new InstanceProperty
+                var instances = x.Instances?.Select(x => new InstanceProperty
                 {
                     Name = x.InstanceId,
                     Type = x.InstanceType.Value,
