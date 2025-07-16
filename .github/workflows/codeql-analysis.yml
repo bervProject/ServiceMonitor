@@ -40,7 +40,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       if: ${{ matrix.language == 'csharp' }}
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
