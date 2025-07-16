@@ -12,7 +12,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     permissions:
       actions: read
       contents: read
@@ -40,7 +40,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       if: ${{ matrix.language == 'csharp' }}
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
