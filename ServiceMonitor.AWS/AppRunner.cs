@@ -38,7 +38,7 @@ namespace ServiceMonitor.AWS
             {
                 Status = x.Status,
                 Name = x.ServiceName,
-                CreatedAt = x.CreatedAt,
+                CreatedAt = x.CreatedAt ?? DateTime.Now,
                 UpdatedAt = x.UpdatedAt,
             }).ToList();
         }
