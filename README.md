@@ -5,7 +5,7 @@ Web Dashboard to All of My Services across provider.
 ## Prerequisite
 
 1. AWS Credentials
-2. .NET 8
+2. .NET 10
 
 ## Environment
 

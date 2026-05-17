@@ -41,6 +41,7 @@ namespace ServiceMonitor.AWS
                 Status = string.Empty,
                 Name = x.FunctionName,
                 Version = x.Version,
+                Runtime = x.Runtime,
                 CreatedAt = DateTimeOffset.Parse(x.LastModified),
             }).ToList();
 

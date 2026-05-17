@@ -80,11 +80,11 @@ foreach (var region in regions)
 {
     stringBuilder.AppendLine($"<br><h2>Lambda (Region: {region})</h2>");
     stringBuilder.AppendLine("<table>");
-    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Version</th><th>Status</th></tr>");
+    stringBuilder.AppendLine("<tr><th>Name</th><th>Created At</th><th>Version</th><th>Runtime</th><th>Status</th></tr>");
     var functions = await lambdaFunction.GetFunctionsAsync(region);
     foreach (var functionData in functions)
     {
-        stringBuilder.AppendLine($"<tr><td>{functionData.Name}</td><td>{functionData.CreatedAt}</td><td>{functionData.Version}</td><td>{functionData.Status}</td></tr>");
+        stringBuilder.AppendLine($"<tr><td>{functionData.Name}</td><td>{functionData.CreatedAt}</td><td>{functionData.Version}</td><td>{functionData.Runtime}</td><td>{functionData.Status}</td></tr>");
     }
     stringBuilder.AppendLine("</table>");
 }
