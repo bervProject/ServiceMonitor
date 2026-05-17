@@ -33,7 +33,7 @@ namespace ServiceMonitor.AWS
             {
                 throw new ArgumentNullException(nameof(ecrClient));
             }
-            var request = new DescribeRepositoriesRequest()
+            var request = new DescribeRepositoriesRequest
             {
                 MaxResults = 1000,
             };
@@ -61,12 +61,12 @@ namespace ServiceMonitor.AWS
             var imageListRequest = new DescribeImagesRequest
             {
                 RepositoryName = repoName,
-                Filter = new Amazon.ECR.Model.DescribeImagesFilter
+                Filter = new DescribeImagesFilter
                 {
                     TagStatus = TagStatus.TAGGED,
                 }
             };
-            var tagsResources = await ecrClient.DescribeImagesAsync(imageListRequest);
+            var tagsResources = await ecrClient.DescribeImagesAsync(imageListRequest, cancellationToken);
             return tagsResources.ImageDetails.Select(x => new TagItem
             {
                 CreatedTime = x.ImagePushedAt ?? DateTime.Now,
@@ -129,9 +129,9 @@ namespace ServiceMonitor.AWS
                 ImageIds = deleteImages,
             };
 
-            var batchResponse = await ecrClient.BatchDeleteImageAsync(deleteImageRequest);
+            var batchResponse = await ecrClient.BatchDeleteImageAsync(deleteImageRequest, cancellationToken);
 
-            _logger.LogInformation("Success remove {} and fail {}", batchResponse.ImageIds.Count, batchResponse.Failures.Count);
+            _logger.LogInformation("Success remove {0} and fail {1}", batchResponse.ImageIds.Count, batchResponse.Failures.Count);
 
             return (batchResponse.ImageIds.Select(x => x.ImageTag).ToList(), batchResponse.Failures.Select(x => x.ImageId.ImageTag).ToList());
         }

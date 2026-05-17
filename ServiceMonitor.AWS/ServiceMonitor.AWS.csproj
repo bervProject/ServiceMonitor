@@ -5,13 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.AppRunner" Version="4.0.2.29" />
-    <PackageReference Include="AWSSDK.EC2" Version="4.0.87" />
-    <PackageReference Include="AWSSDK.ECR" Version="4.0.13.5" />
-    <PackageReference Include="AWSSDK.Lambda" Version="4.0.15.2" />
-    <PackageReference Include="AWSSDK.S3" Version="4.0.23" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
+    <PackageReference Include="AWSSDK.AppRunner" Version="4.0.2.32" />
+    <PackageReference Include="AWSSDK.EC2" Version="4.0.88.2" />
+    <PackageReference Include="AWSSDK.ECR" Version="4.0.13.8" />
+    <PackageReference Include="AWSSDK.Lambda" Version="4.0.15.5" />
+    <PackageReference Include="AWSSDK.S3" Version="4.0.23.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>
