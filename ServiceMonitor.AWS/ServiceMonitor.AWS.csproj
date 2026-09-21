@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.AppRunner" Version="4.0.100.14" />
-    <PackageReference Include="AWSSDK.EC2" Version="4.0.120" />
+    <PackageReference Include="AWSSDK.EC2" Version="4.0.123" />
     <PackageReference Include="AWSSDK.ECR" Version="4.0.101.5" />
     <PackageReference Include="AWSSDK.Lambda" Version="4.0.108" />
     <PackageReference Include="AWSSDK.S3" Version="4.0.103.2" />
