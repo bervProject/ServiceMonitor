@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ServiceMonitor.Cloud.Model;
 
-namespace ServiceMonitor.Cloud
+namespace ServiceMonitor.Cloud;
+
+public interface IInstance
 {
-    public interface IInstance
-    {
-        Task<ICollection<InstanceProperty>> GetInstancesAsync(string region, int limit = 100, CancellationToken cancellationToken = default);
-    }
+    Task<ICollection<InstanceProperty>> GetInstancesAsync(string region, int limit = 100, CancellationToken cancellationToken = default);
 }

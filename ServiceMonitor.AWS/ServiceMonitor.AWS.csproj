@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>15</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.AppRunner" Version="4.1.0.2" />
     <PackageReference Include="AWSSDK.EC2" Version="4.1.5" />
     <PackageReference Include="AWSSDK.ECR" Version="4.1.2" />
+    <PackageReference Include="AWSSDK.ECS" Version="4.1.1.1" />
     <PackageReference Include="AWSSDK.Lambda" Version="4.1.4" />
     <PackageReference Include="AWSSDK.S3" Version="4.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.14" />

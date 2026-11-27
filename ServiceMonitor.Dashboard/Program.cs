@@ -4,10 +4,9 @@ using ServiceMonitor.Cloud;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IAppRunner, AppRunner>();
-builder.Services.AddScoped<IInstance, AWSInstance>();
+builder.Services.AddScoped<IInstance, AwsInstance>();
 builder.Services.AddScoped<IFunction, Lambda>();
-builder.Services.AddScoped<IImage, ECR>();
+builder.Services.AddScoped<IImage, Ecr>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 

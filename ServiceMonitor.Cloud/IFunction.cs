@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using ServiceMonitor.Cloud.Model;
 
-namespace ServiceMonitor.Cloud
+namespace ServiceMonitor.Cloud;
+
+public interface IFunction
 {
-    public interface IFunction
-    {
-        Task<ICollection<FunctionProperty>> GetFunctionsAsync(string region, CancellationToken cancellationToken = default);
-    }
+    Task<ICollection<FunctionProperty>> GetFunctionsAsync(string region, CancellationToken cancellationToken = default);
 }
