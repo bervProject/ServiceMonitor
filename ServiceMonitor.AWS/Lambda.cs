@@ -8,43 +8,37 @@ using Amazon;
 using Amazon.Lambda;
 using Amazon.Lambda.Model;
 using System.Linq;
+using ServiceMonitor.Cloud.Model;
 
-namespace ServiceMonitor.AWS
+namespace ServiceMonitor.AWS;
+
+public class Lambda(IServiceProvider serviceProvider) : IFunction
 {
-    public class Lambda : IFunction
+    public async Task<ICollection<FunctionProperty>> GetFunctionsAsync(string region, CancellationToken cancellationToken = default)
     {
-        private readonly IServiceProvider _serviceProvider;
-        public Lambda(IServiceProvider serviceProvider)
+        var lambdaRegion = RegionEndpoint.GetBySystemName(region);
+        using var lambdaClient = ActivatorUtilities.CreateInstance<AmazonLambdaClient>(serviceProvider, lambdaRegion);
+        if (lambdaClient == null)
         {
-            _serviceProvider = serviceProvider;
+            throw new ArgumentNullException(nameof(lambdaClient));
         }
-
-        public async Task<ICollection<FunctionProperty>> GetFunctionsAsync(string region, CancellationToken cancellationToken = default)
+        var collection = new List<InstanceProperty>();
+        var request = new ListFunctionsRequest()
         {
-            var lambdaRegion = RegionEndpoint.GetBySystemName(region);
-            using var lambdaClient = ActivatorUtilities.CreateInstance<AmazonLambdaClient>(_serviceProvider, lambdaRegion);
-            if (lambdaClient == null)
-            {
-                throw new ArgumentNullException(nameof(lambdaClient));
-            }
-            var collection = new List<InstanceProperty>();
-            var request = new ListFunctionsRequest()
-            {
-                MaxItems = 50,
-                FunctionVersion = FunctionVersion.ALL,
-            };
-            var nextToken = string.Empty;
-            var response = await lambdaClient.ListFunctionsAsync(request, cancellationToken);
+            MaxItems = 50,
+            FunctionVersion = FunctionVersion.ALL,
+        };
+        var nextToken = string.Empty;
+        var response = await lambdaClient.ListFunctionsAsync(request, cancellationToken);
 
-            return response.Functions.Select(x => new FunctionProperty
-            {
-                Status = string.Empty,
-                Name = x.FunctionName,
-                Version = x.Version,
-                Runtime = x.Runtime,
-                CreatedAt = DateTimeOffset.Parse(x.LastModified),
-            }).ToList();
+        return response.Functions.Select(x => new FunctionProperty
+        {
+            Status = string.Empty,
+            Name = x.FunctionName,
+            Version = x.Version,
+            Runtime = string.IsNullOrEmpty(x.Runtime) ? string.Empty : x.Runtime,
+            CreatedAt = DateTimeOffset.Parse(x.LastModified),
+        }).ToList();
 
-        }
     }
 }

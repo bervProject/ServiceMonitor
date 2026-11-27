@@ -8,48 +8,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ServiceMonitor.Cloud.Model;
 
-namespace ServiceMonitor.AWS
+namespace ServiceMonitor.AWS;
+
+public class AwsInstance(IServiceProvider serviceProvider) : IInstance
 {
-    public class AWSInstance : IInstance
+    public async Task<ICollection<InstanceProperty>> GetInstancesAsync(string region, int limit = 100, CancellationToken cancellationToken = default)
     {
-        private readonly IServiceProvider _serviceProvider;
-        public AWSInstance(IServiceProvider serviceProvider)
+        // TODO: need better solution for client resolution
+        var ec2Region = RegionEndpoint.GetBySystemName(region);
+        using var ec2Client = ActivatorUtilities.CreateInstance<AmazonEC2Client>(serviceProvider, ec2Region);
+        if (ec2Client == null)
         {
-            _serviceProvider = serviceProvider;
+            throw new ArgumentNullException(nameof(ec2Client));
         }
-
-        public async Task<ICollection<InstanceProperty>> GetInstancesAsync(string region, int limit = 100, CancellationToken cancellationToken = default)
+        var collection = new List<InstanceProperty>();
+        var request = new DescribeInstancesRequest()
         {
-            // TODO: need better solution for client resolution
-            var ec2Region = RegionEndpoint.GetBySystemName(region);
-            using var ec2Client = ActivatorUtilities.CreateInstance<AmazonEC2Client>(_serviceProvider, ec2Region);
-            if (ec2Client == null)
-            {
-                throw new ArgumentNullException(nameof(ec2Client));
-            }
-            var collection = new List<InstanceProperty>();
-            var request = new DescribeInstancesRequest()
-            {
-                MaxResults = limit,
-            };
-            var nextToken = string.Empty;
-            var response = await ec2Client.DescribeInstancesAsync(cancellationToken);
+            MaxResults = limit,
+        };
+        var nextToken = string.Empty;
+        var response = await ec2Client.DescribeInstancesAsync(cancellationToken);
 
-            response.Reservations?.ForEach(x =>
+        response.Reservations?.ForEach(x =>
+        {
+            var instances = x.Instances?.Select(x => new InstanceProperty
             {
-                var instances = x.Instances?.Select(x => new InstanceProperty
-                {
-                    Name = x.InstanceId,
-                    Type = x.InstanceType.Value,
-                    CreatedAt = x.LaunchTime ?? DateTime.Now,
-                    Status = x.State.Name.Value,
-                    UpdatedAt = x.UsageOperationUpdateTime
-                });
-                collection.AddRange(instances);
+                Name = x.InstanceId,
+                Type = x.InstanceType.Value,
+                CreatedAt = x.LaunchTime ?? DateTime.Now,
+                Status = x.State.Name.Value,
+                UpdatedAt = x.UsageOperationUpdateTime
             });
+            collection.AddRange(instances);
+        });
 
-            return collection;
-        }
+        return collection;
     }
 }

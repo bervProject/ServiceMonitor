@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using ServiceMonitor.Cloud.Model;
 
-namespace ServiceMonitor.Cloud
+namespace ServiceMonitor.Cloud;
+
+public interface IBucket
 {
-    public interface IBucket
-    {
-        Task<ICollection<BasicProperty>> GetBuckets(string region, CancellationToken cancellationToken = default);
-    }
+    Task<ICollection<BasicProperty>> GetBuckets(string region, CancellationToken cancellationToken = default);
 }
